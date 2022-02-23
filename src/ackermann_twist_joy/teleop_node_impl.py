@@ -27,7 +27,7 @@ class TeleopNodeConfig(object):
         self.enb_index = 5
         self.linear_index = 4
         self.steering_index = 0
-        self.linear_vel_scale = 0.5
+        self.linear_vel_scale = 0.8
         self.steering_pos_scale = 0.5
         pass
 
