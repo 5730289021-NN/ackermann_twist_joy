@@ -13,7 +13,7 @@ from copy import deepcopy
 import rospy
 
 # ROS message & services includes
-from ackermann_msgs.msg import AckermannDriveStamped
+from ackermann_msgs.msg import AckermannDrive
 from sensor_msgs.msg import Joy
 
 # other includes
@@ -36,10 +36,10 @@ class TeleopNodeROS(object):
         self.component_config_.enb_index = rospy.get_param("~enb_index", 5)
         self.component_config_.linear_index = rospy.get_param("~linear_index", 4)
         self.component_config_.steering_index = rospy.get_param("~steering_index", 0)
-        self.component_config_.linear_vel_scale = rospy.get_param("~linear_vel_scale", 0.2)
-        self.component_config_.steering_pos_scale = rospy.get_param("~steering_pos_scale", 0.7853975)
+        self.component_config_.linear_vel_scale = rospy.get_param("~linear_vel_scale", 0.5)
+        self.component_config_.steering_pos_scale = rospy.get_param("~steering_pos_scale", 0.5)
         # handling publishers
-        self.ackermann_cmd_ = rospy.Publisher('ackermann_cmd', AckermannDriveStamped, queue_size=1)
+        self.ackermann_cmd_ = rospy.Publisher('ackermann_vel', AckermannDrive, queue_size=1)
         # handling subscribers
         self.joy_ = rospy.Subscriber('joy', Joy, self.topic_callback_joy)
 

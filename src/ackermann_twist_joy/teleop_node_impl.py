@@ -10,7 +10,7 @@ MIT
 """
 
 import rospy
-from ackermann_msgs.msg import AckermannDriveStamped
+from ackermann_msgs.msg import AckermannDrive
 from sensor_msgs.msg import Joy
 
 # protected region user include package begin #
@@ -27,8 +27,8 @@ class TeleopNodeConfig(object):
         self.enb_index = 5
         self.linear_index = 4
         self.steering_index = 0
-        self.linear_vel_scale = 0.2
-        self.steering_pos_scale = 0.7853975
+        self.linear_vel_scale = 0.5
+        self.steering_pos_scale = 0.5
         pass
 
     def __str__(self):
@@ -55,7 +55,7 @@ class TeleopNodeData(object):
         self.in_joy = Joy()
         self.in_joy_updated = bool()
         # output data
-        self.out_ackermann_cmd = AckermannDriveStamped()
+        self.out_ackermann_cmd = AckermannDrive()
         self.out_ackermann_cmd_active = bool()
         pass
 
@@ -118,13 +118,13 @@ class TeleopNodeImplementation(object):
         """
         # protected region user update begin #
         if data.in_joy_updated:
-            data.out_ackermann_cmd.header.seq = self.seq
-            data.out_ackermann_cmd.header.stamp = rospy.Time.now()
+            # data.out_ackermann_cmd.header.seq = self.seq
+            # data.out_ackermann_cmd.header.stamp = rospy.Time.now()
             if data.in_joy.buttons[config.enb_index] == True:
-                data.out_ackermann_cmd.drive.speed = data.in_joy.axes[config.linear_index] * config.linear_vel_scale
-                data.out_ackermann_cmd.drive.steering_angle = data.in_joy.axes[config.steering_index] * config.steering_pos_scale
+                data.out_ackermann_cmd.speed = data.in_joy.axes[config.linear_index] * config.linear_vel_scale
+                data.out_ackermann_cmd.steering_angle = data.in_joy.axes[config.steering_index] * config.steering_pos_scale
             else:
-                data.out_ackermann_cmd.drive.speed = 0
+                data.out_ackermann_cmd.speed = 0
             self.seq = self.seq + 1
             data.out_ackermann_cmd_active = True
         else:
