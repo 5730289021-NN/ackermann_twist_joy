@@ -122,7 +122,7 @@ class TeleopNodeImplementation(object):
             # data.out_ackermann_cmd.header.stamp = rospy.Time.now()
             if data.in_joy.buttons[config.enb_index] == True:
                 data.out_ackermann_cmd.speed = data.in_joy.axes[config.linear_index] * config.linear_vel_scale
-                data.out_ackermann_cmd.steering_angle = data.in_joy.axes[config.steering_index] * config.steering_pos_scale
+                data.out_ackermann_cmd.steering_angle = -data.in_joy.axes[config.steering_index] * config.steering_pos_scale
             else:
                 data.out_ackermann_cmd.speed = 0
             self.seq = self.seq + 1
